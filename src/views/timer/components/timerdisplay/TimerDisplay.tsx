@@ -1,9 +1,13 @@
-function TimerDisplay() {
+type TimerDisplayProps = {
+  timeLeft: string;
+};
+
+function TimerDisplay({ timeLeft }: TimerDisplayProps) {
   return (
     <h1 className="timer-display">
       Time left:
       <br />
-      0.000s
+      {timeLeft}s
     </h1>
   );
 }
