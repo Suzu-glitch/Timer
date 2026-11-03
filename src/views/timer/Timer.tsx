@@ -28,14 +28,15 @@ function Timer() {
   }
 
   function startTimer() {
-    const durationMs = Number(value) * MS_PER_SECOND;
+    const startDurationMs =
+      timeLeftMs > 0 ? timeLeftMs : Number(value) * MS_PER_SECOND;
 
-    if (durationMs <= 0 || intervalIdRef.current !== null) {
+    if (startDurationMs <= 0 || intervalIdRef.current !== null) {
       return;
     }
 
-    const endTimeMs = Date.now() + durationMs;
-    setTimeLeftMs(durationMs);
+    const endTimeMs = Date.now() + startDurationMs;
+    setTimeLeftMs(startDurationMs);
 
     intervalIdRef.current = window.setInterval(() => {
       const remainingMs = endTimeMs - Date.now();
@@ -50,13 +51,17 @@ function Timer() {
     }, INTERVAL_MS);
   }
 
+  function pauseTimer() {
+    stopInterval();
+  }
+
   const timeLeft = (timeLeftMs / MS_PER_SECOND).toFixed(3);
 
   return (
     <main className="timer">
       <TimerInput value={value} onChange={handleInputChange} />
       <TimerDisplay timeLeft={timeLeft} />
-      <TimerControls onStart={startTimer} />
+      <TimerControls onStart={startTimer} onPause={pauseTimer} />
     </main>
   );
 }
