@@ -55,13 +55,22 @@ function Timer() {
     stopInterval();
   }
 
+  function resetTimer() {
+    stopInterval();
+    setTimeLeftMs(Number(value) * MS_PER_SECOND);
+  }
+
   const timeLeft = (timeLeftMs / MS_PER_SECOND).toFixed(3);
 
   return (
     <main className="timer">
       <TimerInput value={value} onChange={handleInputChange} />
       <TimerDisplay timeLeft={timeLeft} />
-      <TimerControls onStart={startTimer} onPause={pauseTimer} />
+      <TimerControls
+        onStart={startTimer}
+        onPause={pauseTimer}
+        onReset={resetTimer}
+      />
     </main>
   );
 }
